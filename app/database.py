@@ -4,10 +4,11 @@ from motor.motor_asyncio import AsyncIOMotorClient
 client = None
 db = None
 
+
 async def connect_to_mongo():
     global client, db
 
-    mongo_uri = os.getenv("MONGODB_URI")  # ✅ الاسم الصح
+    mongo_uri = os.getenv("MONGODB_URI")
     if not mongo_uri:
         raise RuntimeError("❌ MONGODB_URI is not set")
 
@@ -20,8 +21,14 @@ async def connect_to_mongo():
     print("✅ Connected to MongoDB")
 
 
-async def close_mongo_connection():   # ✅ الدالة الناقصة
+async def close_mongo_connection():
     global client
     if client:
         client.close()
         print("🛑 MongoDB connection closed")
+
+
+def get_database():   # ✅ الدالة الناقصة (مهمة جدًا)
+    if db is None:
+        raise RuntimeError("❌ Database not initialized")
+    return db
