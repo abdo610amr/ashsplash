@@ -7,9 +7,9 @@ db = None
 async def connect_to_mongo():
     global client, db
 
-    mongo_uri = os.getenv("MONGO_URI")
+    mongo_uri = os.getenv("MONGODB_URI")  # ✅ الاسم الصح
     if not mongo_uri:
-        raise RuntimeError("❌ MONGO_URI is not set")
+        raise RuntimeError("❌ MONGODB_URI is not set")
 
     db_name = os.getenv("DB_NAME", "ecommerce")
 
@@ -18,3 +18,10 @@ async def connect_to_mongo():
 
     await client.admin.command("ping")
     print("✅ Connected to MongoDB")
+
+
+async def close_mongo_connection():   # ✅ الدالة الناقصة
+    global client
+    if client:
+        client.close()
+        print("🛑 MongoDB connection closed")
